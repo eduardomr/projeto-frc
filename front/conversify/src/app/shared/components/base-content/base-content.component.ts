@@ -5,6 +5,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { untilDestroyed } from '@ngneat/until-destroy';
 import { delay, filter } from 'rxjs';
 
+import { LoggedService } from './../../services/logged.service';
+
 @Component({
   selector: 'base-content',
   templateUrl: './base-content.component.html',
@@ -20,7 +22,11 @@ export class BaseContentComponent implements OnInit {
   @ViewChild(MatSidenav)
   sidenav!: MatSidenav;
 
-  constructor(private observer: BreakpointObserver, private router: Router) {
+  constructor(
+    private observer: BreakpointObserver,
+    private router: Router,
+    private loggedService: LoggedService
+  ) {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;

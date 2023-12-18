@@ -1,10 +1,9 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { error } from 'console';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 
-import { LoginService } from './../../services/login.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'form-register',
@@ -20,7 +19,7 @@ export class FormRegisterComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private navigationService: NavigationService,
-    private loginService: LoginService
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
@@ -42,7 +41,7 @@ export class FormRegisterComponent implements OnInit {
     if (this.form.valid) {
       this.onSubmit.emit(this.form.value);
 
-      this.loginService.register(this.form.value).subscribe({
+      this.userService.register(this.form.value).subscribe({
         next: () => {
           alert('Cadastro realizado com sucesso!');
           this.navigationService.navigate(['access', 'login']);

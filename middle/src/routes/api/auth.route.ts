@@ -17,4 +17,15 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/isAuth", async (req, res) => {
+  const { userID } = req.body;
+
+  try {
+    const user = await authService.getUserByToken(userID);
+    return res.json(user);
+  } catch (error) {
+    throw new HttpError.Unauthorized();
+  }
+});
+
 export default router;

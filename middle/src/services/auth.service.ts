@@ -31,7 +31,7 @@ async function login(username: string, pass: string) {
     throw new Error("Usuário não encontrado ou senha inválida");
   }
 
-  // Retorna um jwt com payload contendo o ID (username) do usuario
+  // Retorna um cookie com o token HttpOnly e Secure
   return encode({ userID: username });
 }
 

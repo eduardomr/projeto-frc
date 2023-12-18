@@ -2,6 +2,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NavigationService } from 'src/app/shared/services/navigation.service';
 
+import { AuthService } from '../../services/auth.service';
+
 @Component({
   selector: 'form-login',
   templateUrl: './form-login.component.html',
@@ -15,7 +17,8 @@ export class FormLoginComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private navigationService: NavigationService
+    private navigationService: NavigationService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -35,7 +38,16 @@ export class FormLoginComponent implements OnInit {
 
   send() {
     if (this.form.valid) {
-      this.onSubmit.emit(this.form.value);
+      this.authService.login(this.form.value).subscribe({
+        next: (res: any) => {
+          localStorage.setItem('token', res.token);
+          alert('Login realizado com sucesso!');
+          this.navigationService.navigate(['']);
+        },
+        error: (err) => {
+          alert('Usuário/Senha incorretos.');
+        },
+      });
     }
   }
 

@@ -6,12 +6,8 @@ import { LoginModel } from '../models';
 @Injectable({
   providedIn: 'root',
 })
-export class LoginService extends HttpService {
+export class UserService extends HttpService {
   private endpoint = 'user/';
-
-  login(data: LoginModel) {
-    return this.post(this.endpoint, data);
-  }
 
   register(data: LoginModel) {
     return this.put(this.endpoint + 'add', JSON.stringify(data));

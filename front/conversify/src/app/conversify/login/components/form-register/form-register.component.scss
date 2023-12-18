@@ -7,8 +7,18 @@
   text-align: center;
   font-size: large;
   font-weight: 500;
-  margin-bottom: 8px;
   line-height: 32px;
+  width: 50%;
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 8px;
+}
+
+.home-button {
+  width: 25%;
 }
 
 .form {

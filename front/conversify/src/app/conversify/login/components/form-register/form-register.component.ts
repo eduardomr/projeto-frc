@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
   selector: 'form-register',
@@ -12,7 +13,10 @@ export class FormRegisterComponent implements OnInit {
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   @Output() onLogIn: EventEmitter<any> = new EventEmitter();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private navigationService: NavigationService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -33,5 +37,9 @@ export class FormRegisterComponent implements OnInit {
     if (this.form.valid) {
       this.onSubmit.emit(this.form.value);
     }
+  }
+
+  goToHome() {
+    this.navigationService.navigate(['']);
   }
 }

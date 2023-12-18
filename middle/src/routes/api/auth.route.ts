@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import HttpError from 'http-errors';
 
-import authService from '../../services/authService';
+import authService from '../../services/auth.service';
 
 const router = Router();
 

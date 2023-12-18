@@ -44,7 +44,6 @@ async function getUserByToken(token: string) {
     },
     select: {
       username: true,
-      name: true,
     },
   });
 

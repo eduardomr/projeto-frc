@@ -1,7 +1,7 @@
 import { RequestHandler } from 'express';
 import HttpError from 'http-errors';
 
-import authService from '../services/authService';
+import authService from '../services/auth.service';
 
 const isAuthenticated: RequestHandler = async (req, res, next) => {
   const authHeader = req.headers.authorization;

@@ -5,6 +5,7 @@
   "scripts": {
     "start": "nodemon --watch \"src/\" --exec \"npx ts-node src/index.ts\" -e ts",
     "start:build": "node build/index.js",
+    "container": "bash ./scripts/start_pg_container.sh",
     "prisma_studio_dev": "dotenv -e .env/.dev.env prisma studio",
     "prisma_studio_test": "dotenv -e .env/.test.env prisma studio",
     "prisma_studio_deploy": "dotenv -e .env/.build.env prisma studio",

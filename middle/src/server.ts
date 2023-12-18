@@ -7,7 +7,7 @@ import morgan from 'morgan';
 
 import handleCommonError from './middlewares/handleCommonError';
 import handlePrismaError from './middlewares/handlePrismaError';
-import indexRouter from './routes/indexRoute';
+import indexRouter from './routes/index.route';
 import env from './utils/env-util';
 
 const server = express();

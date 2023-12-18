@@ -1,6 +1,11 @@
 <div class="box">
   <mat-card class="box-inner">
-    <div class="box-header">Acesso à plataforma</div>
+    <div class="header">
+      <div class="home-button"><button class="home" mat-flat-button
+          (click)="goToHome()"><img style="width: 120px;"
+            src="./assets/logo-conversify-horizont.png"></button></div>
+      <div class="box-header">Acesso à plataforma</div>
+    </div>
     <mat-card-content>
       <form [formGroup]="form" (ngSubmit)="send()" class="form">
         <mat-form-field>

@@ -1,18 +1,22 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
-  selector: 'form-logon',
-  templateUrl: './form-logon.component.html',
-  styleUrls: ['./form-logon.component.scss'],
+  selector: 'form-login',
+  templateUrl: './form-login.component.html',
+  styleUrls: ['./form-login.component.scss'],
 })
-export class FormLogonComponent implements OnInit {
+export class FormLoginComponent implements OnInit {
   form!: FormGroup;
 
   @Output() onSubmit: EventEmitter<any> = new EventEmitter();
   @Output() onSignUp: EventEmitter<any> = new EventEmitter();
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private navigationService: NavigationService
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -33,5 +37,9 @@ export class FormLogonComponent implements OnInit {
     if (this.form.valid) {
       this.onSubmit.emit(this.form.value);
     }
+  }
+
+  goToHome() {
+    this.navigationService.navigate(['']);
   }
 }

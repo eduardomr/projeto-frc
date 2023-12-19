@@ -1,0 +1,41 @@
+.home { 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.title {
+    font-size: larger;
+    font-weight: 500;
+}
+
+.button {
+    border-radius: 0.5rem;
+    width: 50vw;
+    height: 4rem;
+    font-size: medium;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+button{
+    transition: all .5s ease;
+}
+button:hover {
+    background-color: rgb(66, 76, 207);
+    color: #f0f0f0;
+}
+
+.main-text {
+    font-weight: 600;
+    font-size: larger;
+}
+
+.additional-info{
+    font-size: small;
+}

@@ -9,4 +9,19 @@ export class HomeComponent implements OnInit {
     constructor() {}
 
     ngOnInit(): void {}
+
+    texto(){
+        console.log("texto");
+        
+    }
+
+    video(){
+        console.log("video");
+        
+    }
+
+    ambos(){
+        console.log("ambos");
+        
+    }
 }

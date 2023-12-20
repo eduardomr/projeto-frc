@@ -38,3 +38,4 @@ Os clientes front-end foram desenvolvidos utilizando o framework Angular, propor
 > O script2.sh não deve ser executado em modo sudo
 - Acesse a pagina www.projetofrc.com para acessar a aplicação
 > Pode-se acessar via http ou https
+- Cadastre seu usuário e faça login na aplicação utilizando o botão login na parte superior esquerda da tela.

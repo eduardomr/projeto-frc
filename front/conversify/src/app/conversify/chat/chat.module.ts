@@ -5,6 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgArrayPipesModule } from 'ngx-pipes';
+import { MatSelectModule } from '@angular/material/select';
+import { MatButtonModule } from '@angular/material/button';
 
 import { ChatRoutingModule } from './chat-routing.module';
 import { SelectChatTypeComponent } from './pages/select-chat-type/select-chat-type.component';
@@ -30,6 +32,8 @@ import { VideoChatComponent } from './pages/video-chat/video-chat.component';
     ReactiveFormsModule,
     NgArrayPipesModule,
     SharedModule,
+    MatSelectModule,
+    MatButtonModule,
   ],
 })
 export class ChatModule {}

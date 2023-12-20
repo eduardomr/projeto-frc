@@ -1,2 +1,28 @@
-<p>video-chat works!</p>
+<div class="container">
+    <span class="title">Chat de Vídeo</span>
+    <div class="center">
+        <ng-template #cam>
+            <video #video id="video" width="640" height="480" autoplay></video>
+        </ng-template>
+        <div *ngIf="canJoinMeeting; else cam" class="devices">
+            <span>Escolha o dispositivo de câmera</span>
+            <mat-form-field appearance="outline">
+                <mat-select  [(ngModel)]="selectedVideoDevice" (change)="onVideoDeviceChange($event)">
+                    <mat-option [value]="videoDevice.deviceId" *ngFor="let videoDevice of availableVideoDevices">{{videoDevice.name}}</mat-option>
+                </mat-select >
+            </mat-form-field>
+
+            <span class="device-title">Escolha o dispositivo de entrada de áudio</span>
+            <mat-form-field appearance="outline">
+                <mat-select  [(ngModel)]="selectedAudioDevice" (change)="onAudioDeviceChange($event)">
+                    <mat-option [value]="audioDevice.deviceId" *ngFor="let audioDevice of availableAudioDevices">{{audioDevice.name}}</mat-option>
+                </mat-select >
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" (click)="onStart()" id="join-meeting">
+              Entrar no Chat
+            </button>
+        </div>
+    </div>
+  </div>
 <return-button></return-button>

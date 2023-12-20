@@ -8,8 +8,8 @@ import { NavBarComponent } from './components/base-content/components/nav-bar/na
 import { NavColumnComponent } from './components/base-content/components/nav-column/nav-column.component';
 
 @NgModule({
-    declarations: [BaseContentComponent, NavBarComponent, NavColumnComponent],
-    imports: [CommonModule, MaterialModule, RouterModule],
-    exports: [BaseContentComponent],
+  declarations: [BaseContentComponent, NavBarComponent, NavColumnComponent],
+  imports: [CommonModule, MaterialModule, RouterModule],
+  exports: [BaseContentComponent],
 })
 export class SharedModule {}

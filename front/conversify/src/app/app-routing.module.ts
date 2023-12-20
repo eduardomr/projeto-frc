@@ -10,6 +10,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'chat',
+    loadChildren: () =>
+      import('./conversify/chat/chat.module').then((m) => m.ChatModule),
+  },
+  {
     path: 'access',
     loadChildren: () =>
       import('./conversify/login/login.module').then((m) => m.LoginModule),
@@ -20,11 +25,10 @@ const routes: Routes = [
       import('./errors/errors.module').then((m) => m.ErrorsModule),
   },
   {
-    path: 'text', // Definição do novo path '/text'
-    redirectTo: 'home/text', // Redirecionamento para 'home/text' dentro do módulo LandingModule
+    path: '',
+    redirectTo: '/home',
     pathMatch: 'full',
   },
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 
 @NgModule({

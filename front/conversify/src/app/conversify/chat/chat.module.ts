@@ -6,14 +6,15 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { NgArrayPipesModule } from 'ngx-pipes';
 
-import { LandingRoutingModule } from './landing-routing.module';
-import { HomeComponent } from './pages/home/home.component';
+import { ChatRoutingModule } from './chat-routing.module';
+import { SelectChatTypeComponent } from './pages/select-chat-type/select-chat-type.component';
+import { TextComponent } from './pages/text/text.component';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [TextComponent, SelectChatTypeComponent],
   imports: [
     CommonModule,
-    LandingRoutingModule,
+    ChatRoutingModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
@@ -22,4 +23,4 @@ import { HomeComponent } from './pages/home/home.component';
     NgArrayPipesModule,
   ],
 })
-export class LandingModule {}
+export class ChatModule {}

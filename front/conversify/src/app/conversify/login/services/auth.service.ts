@@ -13,7 +13,7 @@ export class AuthService extends HttpService {
     return this.post(this.endpoint + 'login', data);
   }
 
-  checkLogged(token: string) {
+  validToken(token: any) {
     return this.post(this.endpoint + 'isAuth', token);
   }
 }

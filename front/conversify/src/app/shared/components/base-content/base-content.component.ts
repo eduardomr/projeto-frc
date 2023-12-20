@@ -16,7 +16,6 @@ export class BaseContentComponent implements OnInit {
   currentRoute: string = '';
 
   isNavColumnOpen: boolean = false;
-  userLogedIn: boolean = false;
   login: boolean = false;
 
   @ViewChild(MatSidenav)

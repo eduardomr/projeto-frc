@@ -1,28 +1,28 @@
 import { Component, OnInit } from '@angular/core';
-import { TextService } from './text.service';
-import { UserDetails } from '../../models/user-details.model';
+
 import { Message } from '../../models/message.model';
+import { UserDetails } from '../../models/user-details.model';
+import { TextService } from '../../services/text.service';
 
 @Component({
   selector: 'text',
   templateUrl: './text.component.html',
-  styleUrls: ['./text.component.scss']
+  styleUrls: ['./text.component.scss'],
 })
 export class TextComponent implements OnInit {
-
   messageText: string = '';
   filter: any;
   chattingWith: UserDetails = {} as UserDetails;
-  myId: string = ''
+  myId: string = '';
 
-  constructor(public chat: TextService) { }
+  constructor(public chat: TextService) {}
 
   ngOnInit(): void {
-    this.chat.getMessage().subscribe(data => {
-      this.chat.messages.push(data as Message)
+    this.chat.getMessage().subscribe((data) => {
+      this.chat.messages.push(data as Message);
       console.log(data);
-    })
-    this.chat.chattingWith.subscribe(user => {
+    });
+    this.chat.chattingWith.subscribe((user) => {
       this.chattingWith = user;
     });
     // this.chat.chattingWith.subscribe(user => {
@@ -32,23 +32,22 @@ export class TextComponent implements OnInit {
     // })
   }
 
-  getMessages(){
+  getMessages() {
     console.log(this.chat.messages);
-    
-    return this.chat.messages
+
+    return this.chat.messages;
   }
 
-  sendMessage(){
+  sendMessage() {
     console.log(this.messageText);
-    
+
     var message = {
       message: this.messageText,
-      to: "text",
-      date: new Date()
-    }
-    this.messageText = ''
+      to: 'text',
+      date: new Date(),
+    };
+    this.messageText = '';
 
-    this.chat.sendMessage(message)
+    this.chat.sendMessage(message);
   }
-
 }

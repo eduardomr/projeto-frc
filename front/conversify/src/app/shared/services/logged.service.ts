@@ -7,7 +7,7 @@ import { AuthService } from 'src/app/conversify/login/services/auth.service';
 export class LoggedService {
   constructor(private authService: AuthService) {}
 
-  async isLogged(): Promise<boolean> {
+  async validToken(): Promise<boolean> {
     let storage = { userID: localStorage.getItem('token') };
     console.log(storage);
 
@@ -15,7 +15,7 @@ export class LoggedService {
       return false;
     }
 
-    await this.authService.checkLogged(JSON.stringify(storage)).subscribe({
+    await this.authService.validToken(JSON.stringify(storage)).subscribe({
       next: () => {
         console.log('teste');
         return true;

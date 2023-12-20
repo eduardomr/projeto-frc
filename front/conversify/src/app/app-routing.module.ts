@@ -19,6 +19,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./errors/errors.module').then((m) => m.ErrorsModule),
   },
+  {
+    path: 'text', // Definição do novo path '/text'
+    redirectTo: 'home/text', // Redirecionamento para 'home/text' dentro do módulo LandingModule
+    pathMatch: 'full',
+  },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ];
 

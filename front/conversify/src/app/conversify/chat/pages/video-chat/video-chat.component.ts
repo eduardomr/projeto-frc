@@ -22,6 +22,7 @@ export class VideoChatComponent implements OnInit {
   showText: boolean = false;
   showError: boolean = false;
   canJoinMeeting: boolean = false;
+  joined: boolean = false;
   errorMessage: string = '';
 
   availableVideoDevices: Array<{deviceId: string, name: string}> = [];
@@ -87,7 +88,7 @@ export class VideoChatComponent implements OnInit {
 
   startMeeting() {
     this.showError = false;
-    this.canJoinMeeting = false;
+    this.joined = true;
     const audioSource = this.selectedAudioDevice;
     const videoSource = this.selectedVideoDevice;
     const constraints = {

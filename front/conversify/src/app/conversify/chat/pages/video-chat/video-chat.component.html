@@ -4,7 +4,7 @@
         <ng-template #cam>
             <video #video id="video" width="640" height="480" autoplay></video>
         </ng-template>
-        <div *ngIf="canJoinMeeting; else cam" class="devices">
+        <div *ngIf="!joined; else cam" class="devices">
             <span>Escolha o dispositivo de câmera</span>
             <mat-form-field appearance="outline">
                 <mat-select  [(ngModel)]="selectedVideoDevice" (change)="onVideoDeviceChange($event)">
@@ -19,7 +19,7 @@
                 </mat-select >
             </mat-form-field>
 
-            <button mat-raised-button color="primary" (click)="onStart()" id="join-meeting">
+            <button *ngIf="canJoinMeeting" mat-raised-button color="primary" (click)="onStart()" id="join-meeting">
               Entrar no Chat
             </button>
         </div>

@@ -9,6 +9,7 @@ import { NgArrayPipesModule } from 'ngx-pipes';
 import { ChatRoutingModule } from './chat-routing.module';
 import { SelectChatTypeComponent } from './pages/select-chat-type/select-chat-type.component';
 import { TextComponent } from './pages/text/text.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [TextComponent, SelectChatTypeComponent],
@@ -21,6 +22,7 @@ import { TextComponent } from './pages/text/text.component';
     FormsModule,
     ReactiveFormsModule,
     NgArrayPipesModule,
+    SharedModule,
   ],
 })
 export class ChatModule {}

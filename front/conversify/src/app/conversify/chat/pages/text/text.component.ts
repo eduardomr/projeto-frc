@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Message } from '../../models/message.model';
-import { UserDetails } from '../../models/user-details.model';
+import { MessageModel } from '../../models/message.model';
+import { UserModel } from '../../models/user-details.model';
 import { TextService } from '../../services/text.service';
+import { UserService } from './../../../login/services/user.service';
 
 @Component({
   selector: 'text',
@@ -12,42 +13,55 @@ import { TextService } from '../../services/text.service';
 export class TextComponent implements OnInit {
   messageText: string = '';
   filter: any;
-  chattingWith: UserDetails = {} as UserDetails;
-  myId: string = '';
+  chattingWith: UserModel = {} as UserModel;
+  myUsername: string = '';
 
-  constructor(public chat: TextService) {}
+  constructor(
+    public textService: TextService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
-    this.chat.getMessage().subscribe((data) => {
-      this.chat.messages.push(data as Message);
+    this.textService.getMessage().subscribe((data) => {
+      this.textService.messages.push(data as MessageModel);
       console.log(data);
     });
-    this.chat.chattingWith.subscribe((user) => {
-      this.chattingWith = user;
-    });
-    // this.chat.chattingWith.subscribe(user => {
-    //   this.chattingWith = user
-    //   this.filter = { $or: [{from: user.id},{to: user.id}]
-    //   }
-    // })
+
+    this.getUser();
   }
 
   getMessages() {
-    console.log(this.chat.messages);
+    console.log(this.textService.messages);
 
-    return this.chat.messages;
+    return this.textService.messages;
+  }
+
+  getUser() {
+    this.userService
+      .retrieve(localStorage.getItem('token') as string)
+      .subscribe({
+        next: (data) => {
+          this.chattingWith = data as UserModel;
+        },
+        error: () => {
+          alert('Erro ao recuperar usuário');
+        },
+      });
+
+    return;
   }
 
   sendMessage() {
     console.log(this.messageText);
 
-    var message = {
+    var message: MessageModel = {
+      from: this.chattingWith.username,
       message: this.messageText,
       to: 'text',
       date: new Date(),
     };
     this.messageText = '';
 
-    this.chat.sendMessage(message);
+    this.textService.sendMessage(message);
   }
 }

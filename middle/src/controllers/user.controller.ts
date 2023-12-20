@@ -1,6 +1,8 @@
 import { RequestHandler } from 'express';
+import HttpError from 'http-errors';
 
 import databaseClient from '../databaseClient';
+import authService from '../services/auth.service';
 
 const create: RequestHandler = async (req, res) => {
   console.log(req.body);
@@ -28,15 +30,20 @@ const list: RequestHandler = async (req, res) => {
 };
 
 const retrieve: RequestHandler = async (req, res) => {
-  const { username } = req.params;
-  const user = await databaseClient.user.findUnique({
-    where: {
-      username,
-    },
-    select: {
-      username: true,
-    },
-  });
+  const { token } = req.body;
+  console.log(req.body);
+
+  let user = null;
+  try {
+    user = await authService.getUserByToken(token);
+  } catch (Error) {
+    throw new HttpError.Unauthorized();
+  }
+
+  if (user === null) {
+    throw new HttpError.Unauthorized();
+  }
+
   return res.json(user);
 };
 

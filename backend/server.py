@@ -29,10 +29,8 @@ def user_sign_in(user_name, methods=['GET', 'POST']):
 @socketio.on('message')
 def messaging(message, methods=['GET', 'POST']):
     print('received message: ' + str(message))
-    # Adiciona a identificação do remetente à mensagem
-    message['from'] = request.sid
     # Emite a mensagem para todos os clientes, exceto o remetente
-    socketio.emit('message', message, skip_sid=request.sid)
+    socketio.emit('message', message, skip_sid= message['from'])
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

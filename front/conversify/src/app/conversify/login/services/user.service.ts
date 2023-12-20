@@ -12,4 +12,11 @@ export class UserService extends HttpService {
   register(data: LoginModel) {
     return this.put(this.endpoint + 'add', JSON.stringify(data));
   }
+
+  retrieve(token: string) {
+    return this.post(
+      this.endpoint + 'retrieve',
+      JSON.stringify({ token: token })
+    );
+  }
 }

@@ -1,5 +1,3 @@
-export interface UserDetails {
-    name: string;
-    id: string;
-  }
-  
+export interface UserModel {
+  username: string;
+}

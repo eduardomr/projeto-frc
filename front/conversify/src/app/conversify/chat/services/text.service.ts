@@ -1,26 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { Subject } from 'rxjs';
 
-import { Message } from '../models/message.model';
-import { UserDetails } from '../models/user-details.model';
+import { MessageModel } from '../models/message.model';
+import { UserModel } from '../models/user-details.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TextService {
-  user: UserDetails = {} as UserDetails;
-  messages: Message[] = [];
-  chattingWith = new Subject<UserDetails>();
+  user: UserModel = {} as UserModel;
+  messages: MessageModel[] = [];
 
   constructor(private socket: Socket) {}
 
-  sendMessage(message: Message) {
-    //this.messages.push(message);
+  sendMessage(message: MessageModel) {
     console.log(this.messages);
-
     this.socket.emit('message', message);
-    this.messages.push(message);
   }
 
   getMessage() {

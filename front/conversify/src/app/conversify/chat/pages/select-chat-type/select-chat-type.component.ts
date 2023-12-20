@@ -12,15 +12,14 @@ export class SelectChatTypeComponent implements OnInit {
   ngOnInit(): void {}
 
   texto() {
-    console.log('texto');
     this.navigationService.navigate(['chat', 'text']);
   }
 
   video() {
-    console.log('video');
+    this.navigationService.navigate(['chat', 'video']);
   }
 
   ambos() {
-    console.log('ambos');
+    this.navigationService.navigate(['chat', 'both']);
   }
 }

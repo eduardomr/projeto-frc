@@ -15,6 +15,7 @@ export class TextComponent implements OnInit {
   filter: any;
   chattingWith: UserModel = {} as UserModel;
   myUsername: string = '';
+  instance: any;
 
   constructor(
     public textService: TextService,
@@ -22,11 +23,7 @@ export class TextComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.textService.getMessage().subscribe((data) => {
-      this.textService.messages.push(data as MessageModel);
-      console.log(data);
-    });
-
+    this.instance = this.textService.getInstance();
     this.getUser();
   }
 

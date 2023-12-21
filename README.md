@@ -6,6 +6,8 @@ Este repositório contém a implementação de um servidor de diálogos que util
 
 O projeto visa proporcionar uma compreensão prática da arquitetura de redes, destacando a implementação de um servidor, a configuração eficiente do Apache para suportar conexões seguras, e a integração eficaz do websocket para possibilitar diálogos interativos.
 
+[Video de Apresentação](https://youtu.be/0gdLBT7x2nY)
+
 ## Configurações do Ambiente
 
 ### Servidor Apache

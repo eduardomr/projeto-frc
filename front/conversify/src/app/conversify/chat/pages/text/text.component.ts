@@ -4,6 +4,7 @@ import { MessageModel } from '../../models/message.model';
 import { UserModel } from '../../models/user-details.model';
 import { TextService } from '../../services/text.service';
 import { UserService } from './../../../login/services/user.service';
+import { NavigationService } from 'src/app/shared/services/navigation.service';
 
 @Component({
   selector: 'text',
@@ -19,7 +20,8 @@ export class TextComponent implements OnInit {
 
   constructor(
     public textService: TextService,
-    private userService: UserService
+    private userService: UserService,
+    private navigationService: NavigationService
   ) {}
 
   ngOnInit(): void {
@@ -42,6 +44,7 @@ export class TextComponent implements OnInit {
         },
         error: () => {
           alert('Erro ao recuperar usuário');
+          this.navigationService.navigate(['access', 'login']);
         },
       });
 

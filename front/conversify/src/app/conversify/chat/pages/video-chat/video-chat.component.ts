@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Conversation, Session, Stream, UserAgent } from '@apirtc/apirtc';
 
 interface Devide {
   deviceId: number;
@@ -8,14 +9,10 @@ interface Devide {
 @Component({
   selector: 'video-chat',
   templateUrl: './video-chat.component.html',
-  styleUrls: ['./video-chat.component.scss']
+  styleUrls: ['./video-chat.component.scss'],
 })
-
 export class VideoChatComponent implements OnInit {
-
-  @ViewChild('video')
-  public video: ElementRef = {} as ElementRef;
-
+  constructor() {}
   selectedVideoDevice: string = '';
   selectedAudioDevice: string = '';
 
@@ -25,8 +22,8 @@ export class VideoChatComponent implements OnInit {
   joined: boolean = false;
   errorMessage: string = '';
 
-  availableVideoDevices: Array<{deviceId: string, name: string}> = [];
-  availableAudioDevices: Array<{deviceId: string, name: string}> = [];
+  availableVideoDevices: Array<{ deviceId: string; name: string }> = [];
+  availableAudioDevices: Array<{ deviceId: string; name: string }> = [];
 
   public ngOnInit() {
     this.showText = false;
@@ -37,23 +34,33 @@ export class VideoChatComponent implements OnInit {
     //this.canJoin();
   }
 
-  canJoin(){
-    if(this.availableAudioDevices.length > 0 || this.availableVideoDevices.length > 0){
+  getConversation() {
+    return this.conversation;
+  }
+
+  canJoin() {
+    if (
+      this.availableAudioDevices.length > 0 ||
+      this.availableVideoDevices.length > 0
+    ) {
       this.canJoinMeeting = true;
     }
   }
 
   private detectDevices() {
-    navigator.mediaDevices.enumerateDevices()
-    .then(devices => {
-        devices.forEach( device => {
+    navigator.mediaDevices
+      .enumerateDevices()
+      .then((devices) => {
+        devices.forEach((device) => {
           if (device.kind === 'audioinput') {
             if (!this.selectedAudioDevice) {
               this.selectedAudioDevice = device.deviceId;
             }
             this.availableAudioDevices.push({
               deviceId: device.deviceId,
-              name: device.label || `microphone ${this.availableAudioDevices.length + 1}`
+              name:
+                device.label ||
+                `microphone ${this.availableAudioDevices.length + 1}`,
             });
           } else if (device.kind === 'videoinput') {
             if (!this.selectedVideoDevice) {
@@ -61,22 +68,20 @@ export class VideoChatComponent implements OnInit {
             }
             this.availableVideoDevices.push({
               deviceId: device.deviceId,
-              name: device.label || `camera ${this.availableVideoDevices.length + 1}`
+              name:
+                device.label ||
+                `camera ${this.availableVideoDevices.length + 1}`,
             });
           }
-      });
-      this.canJoin();
-    })
-    .catch(error => this.handleError(error));
-  }
-
-  onStart() {
-    this.startMeeting();
+        });
+        this.canJoin();
+      })
+      .catch((error) => this.handleError(error));
   }
 
   onVideoDeviceChange(event: any) {
     var videoDevice = event.target.value;
-    
+
     this.selectedVideoDevice = videoDevice;
     this.canJoinMeeting = true;
   }
@@ -86,31 +91,94 @@ export class VideoChatComponent implements OnInit {
     this.canJoinMeeting = true;
   }
 
-  startMeeting() {
-    this.showError = false;
-    this.joined = true;
-    const audioSource = this.selectedAudioDevice;
-    const videoSource = this.selectedVideoDevice;
-    const constraints = {
-      audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-      video: {deviceId: videoSource ? {exact: videoSource} : undefined}
-    };
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-      navigator.mediaDevices.getUserMedia(constraints)
-      .then(stream => {
-        this.video.nativeElement.srcObject = stream;
-        this.video.nativeElement.muted = true;
-        this.video.nativeElement.play();
-        this.showText = true;
-        this.canJoinMeeting = false;
-      })
-      .catch(error => this.handleError(error));
-    }
-  }
-
   private handleError(error: any) {
     this.showError = true;
     this.errorMessage = error.toString();
   }
 
+  conversation: any;
+  remotesCounter = 0;
+
+  @ViewChild('localVideo') videoRef: ElementRef = {} as ElementRef;
+
+  startVideoChat() {
+    this.joined = true;
+    let localStream: Stream = {} as Stream;
+    let userAgent = new UserAgent({
+      uri: 'apiKey:myDemoApiKey',
+    });
+
+    userAgent.register().then((session: Session) => {
+      const conversation: Conversation = session.getConversation('chatroom');
+      this.conversation = conversation;
+
+      conversation.on('streamListChanged', (streamInfo: any) => {
+        if (streamInfo.listEventType === 'added') {
+          if (streamInfo.isRemote === true) {
+            conversation
+              .subscribeToMedia(streamInfo.streamId)
+              .then((stream: Stream) => {
+                console.log('Sucesso em conectar mídia', stream);
+              })
+              .catch((err) => {
+                console.error('Erro ao conectar mídia', err);
+              });
+          }
+        }
+      });
+
+      conversation
+        .on('streamAdded', (stream: Stream) => {
+          this.remotesCounter += 1;
+          stream.addInDiv(
+            'remote-container',
+            'remote-media-' + stream.streamId,
+            {},
+            false
+          );
+        })
+        .on('streamRemoved', (stream: any) => {
+          this.remotesCounter -= 1;
+          stream.removeFromDiv(
+            'remote-container',
+            'remote-media-' + stream.streamId
+          );
+        });
+
+      userAgent
+        ?.createStream({
+          constraints: {
+            audio: true,
+            video: true,
+          },
+        })
+        .then((stream: Stream) => {
+          localStream = stream;
+          localStream.attachToElement(this.videoRef?.nativeElement);
+
+          conversation
+            .join()
+            .then(() => {
+              conversation
+                .publish(localStream)
+                .then((stream: Stream) => {
+                  console.log('Publicado', stream);
+                })
+                .catch((err: any) => {
+                  console.error('Erro na publicação', err);
+                });
+            })
+            .catch((err: any) => {
+              console.error('Não conseguiu dar join', err);
+            });
+        })
+        .catch((err: any) => {
+          console.error('Erro ao criar stream', err);
+        });
+    });
+  }
+
+  getRemotesCounter() {
+    return this.remotesCounter;
+  }
 }
